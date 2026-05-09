@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #050506;
+}
+
+.noise-layer {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: .34;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.045) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 30%, rgba(255,255,255,.025) 0 1px, transparent 1px);
+  background-size: 4px 4px, 7px 7px;
+}
+
+.grid-layer {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  opacity: .18;
+  background-image:
+    linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at center, black, transparent 76%);
+}
+
+.node-card {
+  position: relative;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(255,255,255,.10), rgba(255,255,255,.035));
+  box-shadow: 0 24px 80px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.08);
+  padding: 16px;
+  backdrop-filter: blur(22px);
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.node-card:hover,
+.node-card.is-selected {
+  border-color: var(--node-color);
+  box-shadow: 0 0 0 1px rgba(85, 214, 255, .18), 0 0 42px rgba(85, 214, 255, .24), 0 30px 90px rgba(0,0,0,.42);
+}
+
+.node-card.is-selected {
+  transform: scale(1.03);
+}
+
+.final-node {
+  border-color: rgba(245, 197, 92, .42);
+  box-shadow: 0 0 0 1px rgba(245, 197, 92, .12), 0 0 54px rgba(245, 197, 92, .18), 0 30px 90px rgba(0,0,0,.42);
+}
+
+.placeholder-grid {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 35% 20%, rgba(255,255,255,.13), transparent 26%),
+    linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
+    repeating-linear-gradient(45deg, rgba(255,255,255,.035) 0 10px, transparent 10px 20px);
+}
+
+.energy-flow {
+  stroke-dasharray: 18 26;
+  animation: dash-flow 1.9s linear infinite;
+}
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -88;
+  }
+}
+
+.highlight-token {
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 4px 8px;
+  font-size: 10px;
+  color: rgba(255,255,255,.82);
+}
+
+.highlight-token.added { background: rgba(16,185,129,.13); border-color: rgba(110,231,183,.28); }
+.highlight-token.modified { background: rgba(56,189,248,.13); border-color: rgba(125,211,252,.28); }
+.highlight-token.risk { background: rgba(251,146,60,.13); border-color: rgba(253,186,116,.32); }
+.highlight-token.errorFix { background: rgba(239,68,68,.10); border-color: rgba(252,165,165,.46); }
+.highlight-token.model { background: rgba(167,139,250,.14); border-color: rgba(196,181,253,.32); }
+.highlight-token.ratio { background: rgba(245,158,11,.14); border-color: rgba(252,211,77,.42); }
+
+.panel-title {
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.42);
+}
+
+.panel-body {
+  margin-top: 10px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 16px;
+  background: rgba(255,255,255,.035);
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: rgba(244,244,245,.78);
+}
+
+.control-btn {
+  display: grid;
+  height: 38px;
+  width: 38px;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.84);
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.control-btn:hover {
+  border-color: rgba(255,255,255,.22);
+  background: rgba(255,255,255,.12);
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.18) transparent;
+}
+
+.thin-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.thin-scroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(255,255,255,.16);
+}
