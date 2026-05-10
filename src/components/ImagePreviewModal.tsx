@@ -18,7 +18,7 @@ export default function ImagePreviewModal({ image, onClose }: Props) {
           onClick={onClose}
         >
           <motion.div
-            className="relative min-h-[62vh] max-w-[78vw] overflow-hidden rounded-3xl border border-white/12 bg-zinc-950 p-4 shadow-2xl"
+            className="relative min-h-[62vh] max-w-[78vw] overflow-hidden border border-white/12 bg-zinc-950 p-4 shadow-2xl"
             initial={{ scale: 0.9, y: 30 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.92, y: 20 }}
@@ -27,7 +27,7 @@ export default function ImagePreviewModal({ image, onClose }: Props) {
             <button type="button" onClick={onClose} className="absolute right-5 top-5 z-10 grid h-10 w-10 place-items-center rounded-full bg-black/70 text-white">
               <X size={18} />
             </button>
-            <div className="placeholder-grid grid min-h-[62vh] min-w-[52vw] place-items-center rounded-2xl border border-white/10">
+            <div className="placeholder-grid grid min-h-[62vh] min-w-[52vw] place-items-center border border-white/10">
               <img
                 src={image}
                 alt="大图预览"

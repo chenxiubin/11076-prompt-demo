@@ -1,4 +1,4 @@
-export type NodeType = 'input' | 'prompt' | 'result' | 'problem' | 'final';
+export type NodeType = 'input' | 'prompt' | 'result' | 'problem' | 'final' | 'material' | 'generated' | 'timeline';
 
 export type HighlightType = 'added' | 'modified' | 'risk' | 'errorFix' | 'model' | 'ratio';
 
@@ -24,6 +24,16 @@ export interface CaseNode {
   prompt?: string;
   highlights?: Highlight[];
   analysis?: PromptAnalysis;
+  custom?: boolean;
+}
+
+export interface CanvasConnection {
+  id: string;
+  from: string;
+  to: string;
+  fromSide?: 'left' | 'right';
+  toSide?: 'left' | 'right';
+  kind?: 'timeline' | 'prompt';
 }
 
 export interface Case {

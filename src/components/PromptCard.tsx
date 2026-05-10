@@ -1,5 +1,5 @@
-import type { CaseNode, HighlightType } from '../types/case';
 import type { CSSProperties } from 'react';
+import type { CaseNode, HighlightType } from '../types/case';
 
 interface Props {
   node: CaseNode;
@@ -35,7 +35,7 @@ export default function PromptCard({ node, selected, color, onSelect }: Props) {
       <div className="mt-4 flex flex-wrap gap-2">
         {node.highlights?.map((item) => (
           <span key={`${item.text}-${item.type}`} className={`highlight-token ${item.type}`}>
-            {label[item.type]} · {item.text}
+            {label[item.type]} / {item.text}
           </span>
         ))}
       </div>
