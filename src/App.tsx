@@ -5,10 +5,15 @@ import InfiniteCanvas from './components/InfiniteCanvas';
 import AnalysisPanel from './components/AnalysisPanel';
 import ImagePreviewModal from './components/ImagePreviewModal';
 import MethodologyPage from './components/MethodologyPage';
+import GeminiWebBasicPage from './components/GeminiWebBasicPage';
 import CanvasChrome from './components/CanvasChrome';
+import HomePage from './components/HomePage';
+import RetouchPlatformPage from './components/RetouchPlatformPage.jsx';
+import DrawingPlatformPage from './components/DrawingPlatformPage';
 import { cases } from './data/cases';
 import { pdfSeedConnectionsByCase, pdfSeedCustomNodesByCase, pdfSeedDeletedNodeIdsByCase, pdfSeedPositions } from './data/pdfSeedCanvas';
 import type { CanvasConnection, CaseNode, NodeType } from './types/case';
+import type { AppView } from './types/view';
 
 interface PersistedCanvasState {
   uploadedImages: Record<string, string>;
@@ -174,7 +179,7 @@ export default function App() {
   }
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [activeView, setActiveView] = useState<'case' | 'methodology'>('case');
+  const [activeView, setActiveView] = useState<AppView>('home');
   const [selectedNode, setSelectedNode] = useState<CaseNode | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [uploadedImages, setUploadedImages] = useState<Record<string, string>>(initialStateRef.current.uploadedImages);
@@ -371,13 +376,17 @@ export default function App() {
     setSelectedNode(firstPrompt(nextVisibleNodes) ?? nextVisibleNodes[0] ?? null);
   };
 
+  const navigate = (view: AppView) => {
+    setActiveView(view);
+    if (view === 'case' && !selectedNode) {
+      setSelectedNode(firstPrompt(activeAllNodes) ?? activeAllNodes[0] ?? null);
+    }
+  };
+
   return (
     <Layout
       activeView={activeView}
-      onTutorialSelect={() => changeCase(0)}
-      onMethodology={() => {
-        setActiveView('methodology');
-      }}
+      onNavigate={navigate}
     >
       <div className="relative h-full min-w-0 flex-1">
         {activeView === 'case' && (
@@ -391,16 +400,29 @@ export default function App() {
         )}
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeView === 'methodology' ? 'methodology' : activeCase.id}
+            key={activeView === 'case' ? activeCase.id : activeView}
             className="h-full"
             initial={{ opacity: 0, scale: 0.94, filter: 'blur(16px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
             exit={{ opacity: 0, scale: 0.9, filter: 'blur(20px)' }}
             transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
           >
-            {activeView === 'methodology' ? (
+            {activeView === 'home' && (
+              <HomePage onNavigate={navigate} />
+            )}
+            {activeView === 'retouch' && (
+              <RetouchPlatformPage />
+            )}
+            {activeView === 'draw' && (
+              <DrawingPlatformPage />
+            )}
+            {activeView === 'methodology' && (
               <MethodologyPage onBack={() => changeCase(activeIndex)} />
-            ) : (
+            )}
+            {activeView === 'geminiBasic' && (
+              <GeminiWebBasicPage onBack={() => changeCase(activeIndex)} />
+            )}
+            {activeView === 'case' && (
               <InfiniteCanvas
                 activeCase={{ ...activeCase, nodes: activeCaseNodes }}
                 selectedNodeId={selectedInCase?.id ?? ''}

@@ -163,6 +163,11 @@ export default function InfiniteCanvas({
     return event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
   };
 
+  const eventShouldBypassCanvasWheel = (event: globalThis.WheelEvent) => {
+    const target = event.target as HTMLElement | null;
+    return Boolean(target?.closest('[data-canvas-wheel-lock="true"]'));
+  };
+
   useEffect(() => {
     const handleMove = (event: MouseEvent) => {
       if (!nodeDragRef.current.dragging) return;
@@ -252,6 +257,7 @@ export default function InfiniteCanvas({
     if (!canvas) return;
 
     const handleNativeWheel = (event: globalThis.WheelEvent) => {
+      if (eventShouldBypassCanvasWheel(event)) return;
       if (!eventIsInsideCanvas(event)) return;
       const deltaY = event.deltaY;
 

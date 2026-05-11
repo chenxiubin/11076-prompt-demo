@@ -1,0 +1,11 @@
+fastapi==0.115.12
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+pillow==11.1.0
+numpy==1.26.4
+opencv-python-headless==4.11.0.86
+python-dotenv==1.2.2
+requests==2.33.1
+alibabacloud_imageseg20191230==3.0.1
+alibabacloud_tea_openapi==0.3.16
+alibabacloud_tea_util==0.3.13

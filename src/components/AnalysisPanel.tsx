@@ -98,7 +98,7 @@ export default function AnalysisPanel({ node, allNodes, savedAt, onNodeUpdate, o
           <motion.button
             type="button"
             onClick={() => setCollapsed(false)}
-            className="fixed right-0 top-1/2 z-40 flex -translate-y-1/2 items-center gap-2 rounded-l-2xl border border-r-0 border-cyan-200/25 bg-black/65 py-4 pl-3 pr-2 text-cyan-50 shadow-glow backdrop-blur-2xl transition hover:border-cyan-200/50 hover:bg-cyan-300/10"
+            className="fixed right-0 top-1/2 z-40 flex -translate-y-1/2 items-center gap-2 rounded-l-2xl border border-r-0 border-cyan-200/25 bg-[#070b0d] py-4 pl-3 pr-2 text-cyan-50 shadow-glow transition hover:border-cyan-200/50 hover:bg-[#0b1417]"
             aria-label="打开卡片属性栏"
             initial={{ x: 54, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -114,7 +114,9 @@ export default function AnalysisPanel({ node, allNodes, savedAt, onNodeUpdate, o
       <AnimatePresence>
         {!collapsed && (
           <motion.aside
-            className="fixed bottom-4 right-4 top-[84px] z-50 w-[380px] rounded-3xl border border-white/10 bg-black/62 shadow-2xl backdrop-blur-2xl"
+            data-canvas-wheel-lock="true"
+            className="solid-tool-panel fixed bottom-4 right-4 top-[84px] z-50 w-[380px] rounded-3xl"
+            onWheel={(event) => event.stopPropagation()}
             initial={{ x: 410, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 410, opacity: 0 }}

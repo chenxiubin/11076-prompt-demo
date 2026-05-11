@@ -1,8 +1,16 @@
 node_modules/
 dist/
 *.tsbuildinfo
+vite.config.js
+vite.config.d.ts
 vite-dev*.log
 .env
 .env.*
 !.env.example
-
+__pycache__/
+*.py[cod]
+backend/.venv/
+backend/*.log
+backend/*.err
+backend/*-output.png
+backend/*-test.jpg

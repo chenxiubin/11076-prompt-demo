@@ -18,7 +18,7 @@ export default function CanvasChrome({ activeCase, cases, activeIndex, onCaseCha
         <p className="mt-3 line-clamp-2 text-sm leading-6 text-zinc-400">{activeCase.goal}</p>
       </div>
 
-      <div className="absolute bottom-8 left-8 z-40 max-w-[calc(100%-440px)] rounded-3xl border border-white/10 bg-black/48 p-3 shadow-2xl backdrop-blur-2xl">
+      <div className="solid-tool-panel absolute bottom-8 left-8 z-40 max-w-[calc(100%-440px)] rounded-3xl p-3">
         <div className="mb-2 flex items-center gap-3 px-1">
           <span className="text-[11px] uppercase tracking-[.26em] text-zinc-500">Tutorial Steps</span>
           <span className="h-px flex-1 bg-white/10" />
@@ -33,10 +33,10 @@ export default function CanvasChrome({ activeCase, cases, activeIndex, onCaseCha
               className={`group flex min-w-[190px] items-center gap-3 rounded-2xl border px-4 py-3 text-left transition ${
                 index === activeIndex
                   ? 'border-cyan-300/55 bg-cyan-300/12 text-white shadow-glow'
-                  : 'border-white/10 bg-white/[.035] text-zinc-400 hover:border-white/25 hover:bg-white/[.07]'
+                  : 'border-white/10 bg-[#111518] text-zinc-400 hover:border-white/25 hover:bg-[#171d21]'
               }`}
             >
-              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/7 font-mono text-xs">
+              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl border border-white/10 bg-[#191f23] font-mono text-xs">
                 {String(index + 1).padStart(2, '0')}
               </span>
               <span className="min-w-0">
@@ -48,7 +48,7 @@ export default function CanvasChrome({ activeCase, cases, activeIndex, onCaseCha
           <button
             type="button"
             onClick={onMethodology}
-            className="flex min-w-[120px] items-center justify-center gap-2 rounded-2xl border border-amber-200/25 bg-amber-200/8 px-4 py-3 text-sm text-amber-50 transition hover:border-amber-200/45 hover:bg-amber-200/14"
+            className="flex min-w-[120px] items-center justify-center gap-2 rounded-2xl border border-amber-200/25 bg-[#211a0d] px-4 py-3 text-sm text-amber-50 transition hover:border-amber-200/45 hover:bg-[#2a2110]"
           >
             <BookOpen size={16} />
             方法论

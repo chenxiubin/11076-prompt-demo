@@ -1,0 +1,16 @@
+.git
+node_modules
+dist
+*.tsbuildinfo
+vite-dev*.log
+
+backend/.env
+backend/.venv
+backend/__pycache__
+backend/*.log
+backend/*.err
+backend/*-output.png
+backend/*-test.jpg
+
+Dockerfile
+docker-compose*.yml

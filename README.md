@@ -22,6 +22,20 @@ npm run dev
 npm.cmd run dev
 ```
 
+## 线上部署
+
+项目已包含 Docker 部署配置，修图平台后端也在 `backend/` 目录中。服务器部署请看：
+
+```text
+DEPLOY.md
+```
+
+线上启动命令：
+
+```bash
+docker compose up -d --build
+```
+
 ## 图片替换
 
 图片占位路径位于：

@@ -25,6 +25,11 @@ interface DiffResult {
   tokens: string[];
 }
 
+interface DiffSegment {
+  text: string;
+  changed: boolean;
+}
+
 const defaultImageSize: ImageSize = { width: 360, height: 260 };
 const resultImageSize: ImageSize = { width: 460, height: 300 };
 const maxImageSize: ImageSize = { width: 500, height: 380 };
@@ -82,6 +87,44 @@ const getPromptDiff = (base: string, current: string): DiffResult | null => {
   return { tokens: splitDiffTokens(changed) };
 };
 
+const getPromptDiffSegments = (base: string, current: string): DiffSegment[] => {
+  if (!current) return [];
+  if (!base || base === current) return [{ text: current, changed: Boolean(!base && current) }];
+
+  let prefixLength = 0;
+  while (prefixLength < base.length && prefixLength < current.length && base[prefixLength] === current[prefixLength]) {
+    prefixLength += 1;
+  }
+
+  let suffixLength = 0;
+  while (
+    suffixLength < base.length - prefixLength &&
+    suffixLength < current.length - prefixLength &&
+    base[base.length - 1 - suffixLength] === current[current.length - 1 - suffixLength]
+  ) {
+    suffixLength += 1;
+  }
+
+  const prefix = current.slice(0, prefixLength);
+  const changed = current.slice(prefixLength, current.length - suffixLength);
+  const suffix = current.slice(current.length - suffixLength);
+
+  return [
+    prefix ? { text: prefix, changed: false } : null,
+    changed ? { text: changed, changed: true } : null,
+    suffix ? { text: suffix, changed: false } : null,
+  ].filter(Boolean) as DiffSegment[];
+};
+
+const splitChangedSegment = (segment: DiffSegment): DiffSegment[] => {
+  if (!segment.changed) return [segment];
+  const parts = segment.text.split(/([，。；、,.?？!！：:\s]+)/);
+  return parts.filter(Boolean).map((part) => ({
+    text: part,
+    changed: !/^[，。；、,.?？!！：:\s]+$/.test(part),
+  }));
+};
+
 const splitDiffTokens = (text: string) =>
   text
     .split(/[，。；、,.]/)
@@ -113,9 +156,14 @@ export default function ImageNode({
   const [imageSize, setImageSize] = useState<ImageSize>(fallbackSize);
   const [imageFailed, setImageFailed] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isPromptEditing, setIsPromptEditing] = useState(false);
   const promptRef = useRef<HTMLTextAreaElement | null>(null);
   const prompt = node.prompt ?? '';
   const diff = useMemo(() => getPromptDiff(promptCompareBase ?? '', prompt), [prompt, promptCompareBase]);
+  const promptSegments = useMemo(
+    () => getPromptDiffSegments(promptCompareBase ?? '', prompt).flatMap(splitChangedSegment),
+    [prompt, promptCompareBase],
+  );
 
   const adjustPromptHeight = () => {
     const input = promptRef.current;
@@ -156,7 +204,7 @@ export default function ImageNode({
     adjustPromptHeight();
     const frame = window.requestAnimationFrame(adjustPromptHeight);
     return () => window.cancelAnimationFrame(frame);
-  }, [imageSize.width, prompt]);
+  }, [imageSize.width, prompt, isPromptEditing]);
 
   useEffect(() => {
     onSizeChange?.(node.id, imageSize);
@@ -303,21 +351,53 @@ export default function ImageNode({
               </button>
             </div>
           </div>
-          <textarea
-            ref={promptRef}
-            value={prompt}
-            onChange={(event) => {
-              event.currentTarget.style.height = 'auto';
-              event.currentTarget.style.height = `${event.currentTarget.scrollHeight + 2}px`;
-              onPromptChange(event.target.value);
-            }}
-            onMouseDown={(event) => event.stopPropagation()}
-            placeholder="填写 AI 生图提示词"
-            className="ai-prompt-input"
-          />
+          {isPromptEditing ? (
+            <textarea
+              ref={promptRef}
+              value={prompt}
+              autoFocus
+              onFocus={adjustPromptHeight}
+              onBlur={() => setIsPromptEditing(false)}
+              onChange={(event) => {
+                event.currentTarget.style.height = 'auto';
+                event.currentTarget.style.height = `${event.currentTarget.scrollHeight + 2}px`;
+                onPromptChange(event.target.value);
+              }}
+              onMouseDown={(event) => event.stopPropagation()}
+              placeholder="填写 AI 生图提示词"
+              className="ai-prompt-input"
+            />
+          ) : (
+            <div
+              role="textbox"
+              tabIndex={0}
+              className={`ai-prompt-input ai-prompt-highlight ${prompt ? '' : 'is-empty'}`}
+              onClick={(event) => {
+                event.stopPropagation();
+                setIsPromptEditing(true);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  setIsPromptEditing(true);
+                }
+              }}
+              onMouseDown={(event) => event.stopPropagation()}
+            >
+              {prompt ? (
+                promptSegments.map((segment, index) => (
+                  <span key={`${segment.text}-${index}`} className={segment.changed ? 'ai-prompt-inline-diff' : undefined}>
+                    {segment.text}
+                  </span>
+                ))
+              ) : (
+                <span>填写 AI 生图提示词</span>
+              )}
+            </div>
+          )}
           {promptCompareBase !== undefined && (
             <div className="ai-prompt-diff">
-              <p className="ai-prompt-diff-title">与第 1 张 AI 生图提示词差异</p>
+              <p className="ai-prompt-diff-title">与上一轮 AI 生图提示词差异</p>
               {diff ? (
                 <div className="ai-prompt-diff-list">
                   {diff.tokens.map((token, index) => (

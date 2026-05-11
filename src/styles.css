@@ -223,6 +223,28 @@ body {
   color: rgba(161,161,170,.58);
 }
 
+.ai-prompt-highlight {
+  min-height: 70px;
+  cursor: text;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ai-prompt-highlight.is-empty {
+  color: rgba(161,161,170,.58);
+}
+
+.ai-prompt-inline-diff {
+  display: inline;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(16,185,129,.28), rgba(20,184,166,.18));
+  box-shadow: 0 0 0 1px rgba(110,231,183,.22), 0 0 18px rgba(16,185,129,.12);
+  color: rgba(236,253,245,.98);
+  padding: 1px 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
 .ai-prompt-diff {
   margin-top: 14px;
   border-top: 1px solid rgba(255,255,255,.08);
@@ -435,7 +457,7 @@ body {
 
 .property-section {
   border: 1px solid rgba(255,255,255,.09);
-  background: rgba(255,255,255,.035);
+  background: #101417;
   padding: 12px;
 }
 
@@ -451,7 +473,7 @@ body {
 .property-textarea {
   width: 100%;
   border: 1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.28);
+  background: #07090b;
   padding: 9px 10px;
   color: rgba(244,244,245,.92);
   font-size: 12px;
@@ -478,7 +500,7 @@ body {
   justify-content: center;
   gap: 8px;
   border: 1px solid rgba(125,211,252,.24);
-  background: rgba(14,165,233,.12);
+  background: #0b222a;
   padding: 9px 12px;
   color: rgba(224,242,254,.94);
   font-size: 12px;
@@ -491,7 +513,7 @@ body {
 .property-action:hover,
 .property-save:hover {
   border-color: rgba(125,211,252,.58);
-  background: rgba(14,165,233,.20);
+  background: #10313b;
 }
 
 .property-action {
@@ -502,7 +524,7 @@ body {
 .property-save {
   width: 100%;
   border-color: rgba(52,211,153,.28);
-  background: rgba(16,185,129,.13);
+  background: #0d2a21;
   color: rgba(209,250,229,.96);
 }
 
@@ -512,7 +534,7 @@ body {
   max-height: 180px;
   margin-top: 10px;
   object-fit: contain;
-  background: rgba(0,0,0,.32);
+  background: #07090b;
   border: 1px solid rgba(255,255,255,.09);
 }
 
@@ -590,4 +612,167 @@ body {
 .thin-scroll::-webkit-scrollbar-thumb {
   border-radius: 999px;
   background: rgba(255,255,255,.16);
+}
+
+.solid-tool-panel {
+  border: 1px solid rgba(255,255,255,.11);
+  background:
+    linear-gradient(180deg, rgba(18, 22, 25, .98), rgba(7, 9, 11, .985));
+  box-shadow: 0 26px 80px rgba(0,0,0,.72), inset 0 1px 0 rgba(255,255,255,.045);
+  backdrop-filter: none;
+}
+
+.home-shell,
+.retouch-shell {
+  border: 1px solid rgba(255,255,255,.10);
+  background:
+    radial-gradient(circle at 18% 8%, rgba(56,189,248,.12), transparent 28%),
+    radial-gradient(circle at 78% 74%, rgba(16,185,129,.09), transparent 26%),
+    linear-gradient(180deg, rgba(8,12,15,.96), rgba(3,5,7,.98));
+  box-shadow: 0 28px 90px rgba(0,0,0,.58), inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+.home-module-card {
+  min-height: 430px;
+}
+
+.retouch-preview-panel {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 24px;
+  background: #080b0e;
+}
+
+.retouch-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,.09);
+  background: #0f1418;
+  padding: 12px 14px;
+  color: rgba(228,228,231,.86);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.retouch-image-stage {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  place-items: center;
+  overflow: hidden;
+  padding: 18px;
+}
+
+.checkerboard-soft {
+  background-color: #f7f8f4;
+  background-image:
+    linear-gradient(45deg, #e9ebe4 25%, transparent 25%),
+    linear-gradient(-45deg, #e9ebe4 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e9ebe4 75%),
+    linear-gradient(-45deg, transparent 75%, #e9ebe4 75%);
+  background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+  background-size: 24px 24px;
+}
+
+.retouch-primary-btn,
+.retouch-secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 16px;
+  border: 1px solid rgba(94,234,212,.28);
+  background: #0d2a21;
+  padding: 11px 16px;
+  color: rgba(209,250,229,.96);
+  font-size: 14px;
+  font-weight: 700;
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+}
+
+.retouch-primary-btn:hover,
+.retouch-secondary-btn:hover {
+  border-color: rgba(125,211,252,.58);
+  background: #10313b;
+  transform: translateY(-1px);
+}
+
+.retouch-secondary-btn {
+  width: 100%;
+  border-color: rgba(255,255,255,.12);
+  background: #111518;
+  color: rgba(244,244,245,.9);
+}
+
+.retouch-chip {
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  background: #07090b;
+  padding: 9px 8px;
+  color: rgba(212,212,216,.82);
+  font-size: 12px;
+  font-weight: 700;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.retouch-chip.is-active {
+  border-color: rgba(94,234,212,.62);
+  background: #0d2a21;
+  color: rgba(209,250,229,.98);
+}
+
+.retouch-legacy-page {
+  border: 0;
+  box-shadow: none;
+}
+
+.retouch-legacy-page > section:first-of-type {
+  border-color: rgba(255,255,255,.10);
+  background: #05080a;
+  backdrop-filter: none;
+}
+
+.retouch-legacy-page .rounded-3xl,
+.retouch-legacy-page .rounded-2xl,
+.retouch-legacy-page .rounded-xl {
+  box-shadow: none;
+}
+
+.retouch-legacy-page aside,
+.retouch-legacy-page .bg-\[\#111614\],
+.retouch-legacy-page .bg-\[\#0d1110\],
+.retouch-legacy-page .bg-\[\#0a0f0a\] {
+  background-color: #0b0f12;
+}
+
+.retouch-legacy-page .border-white\/10 {
+  border-color: rgba(255,255,255,.11);
+}
+
+.retouch-legacy-page .text-\[\#b7ff2a\] {
+  color: rgba(94,234,212,.95);
+}
+
+.retouch-legacy-page .bg-\[\#b7ff2a\] {
+  background-color: rgb(94 234 212);
+}
+
+.retouch-legacy-page .border-\[\#b7ff2a\] {
+  border-color: rgb(94 234 212);
+}
+
+.checkerboard {
+  background-color: #fff;
+  background-image:
+    linear-gradient(45deg, #eef0e8 25%, transparent 25%),
+    linear-gradient(-45deg, #eef0e8 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #eef0e8 75%),
+    linear-gradient(-45deg, transparent 75%, #eef0e8 75%);
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+  background-size: 20px 20px;
 }
